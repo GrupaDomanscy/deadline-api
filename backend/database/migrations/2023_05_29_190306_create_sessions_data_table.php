@@ -13,19 +13,21 @@ return new class extends Migration
     {
         Schema::create('sessions_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
+
+            $table->dateTime('started_at');
+
+            $table->foreignId('segment_id')
                 ->references('id')
-                ->on('users')
+                ->on('segments')
                 ->onDelete('CASCADE');
-            $table->foreignId('subsegment_id')
-                ->references('id')
-                ->on('subsegments')
-                ->onDelete('CASCADE');
+
             $table->foreignId('session_id')
                 ->references('id')
                 ->on('sessions')
                 ->onDelete('CASCADE');
-            $table->timestamps();
+
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

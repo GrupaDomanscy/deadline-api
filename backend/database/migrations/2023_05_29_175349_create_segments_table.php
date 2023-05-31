@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subsegments', function (Blueprint $table) {
+        Schema::create('segments', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('project_id')
                 ->references('id')
                 ->on('projects')
                 ->onDelete('CASCADE');
             $table->string('description');
-            $table->boolean('done');
+            $table->boolean('done')->default(false);
 
-            $table->timestamps();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subsegment');
+        Schema::dropIfExists('segments');
     }
 };

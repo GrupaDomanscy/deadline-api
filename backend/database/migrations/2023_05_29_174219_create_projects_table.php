@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
-            $table->string('description');
-            $table->boolean('done');
+            $table->text('description');
+            $table->boolean('done')->default(false);
             $table->foreignId('created_by_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('CASCADE');
-            $table->timestamps();
+
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
