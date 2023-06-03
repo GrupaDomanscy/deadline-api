@@ -6,20 +6,20 @@ use App\Http\Requests\AddProjectRequest;
 use App\Http\Requests\DeleteProjectRequest;
 use App\Http\Requests\EditProjectRequest;
 use App\Http\Requests\GetProjectRequest;
+use App\Repositories\ProjectRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
+    public function __construct(private ProjectRepository $projectRepository){}
     public function getAll(){
-        return DB::table('projects')
-            ->get();
+        return $this->projectRepository->getAll();
     }
     public function get(GetProjectRequest $request){
         $data = $request->validated();
-        return DB::table('projects')
-            ->where('id','=',$data['id']);
+
     }
     public function add(AddProjectRequest $request){
         $data = $request->validated();
