@@ -19,7 +19,7 @@ class ProjectController extends Controller
     }
     public function get(GetProjectRequest $request){
         $data = $request->validated();
-
+        return $this->projectRepository->get($data['id']);
     }
     public function add(AddProjectRequest $request){
         $data = $request->validated();
